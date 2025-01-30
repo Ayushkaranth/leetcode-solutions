@@ -1,12 +1,17 @@
 class Solution {
     public int level(TreeNode root) {
         if (root == null) return 0;
-        return 1 + Math.max(level(root.right), level(root.left));
+        
+        int left = level(root.left);
+        int right = level(root.right);
+        
+        if (left == -1 || right == -1 || Math.abs(left - right) > 1) return -1;
+        
+        return 1 + Math.max(left, right);
     }
 
     public boolean isBalanced(TreeNode root) {
         if (root == null) return true;
-        if (Math.abs(level(root.right) - level(root.left)) > 1) return false;
-        return isBalanced(root.left) && isBalanced(root.right);
+        return level(root) != -1;
     }
 }
